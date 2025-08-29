@@ -5,6 +5,7 @@ import { router } from "./app/routes";
 import { envVars } from "./app/config/env";
 import { globalErrorHandler } from "./app/middlewire/globalErrorHandler";
 import  httpStatus  from 'http-status-codes';
+import { notFound } from "./app/middlewire/notFound";
 
 
 const app = express();
@@ -24,11 +25,6 @@ app.get("/", (req: Request, res: Response) => {
 
 app.use(globalErrorHandler)
 
-app.use((req: Request, res: Response)=>{
-   res.status(httpStatus.NOT_FOUND).json({
-    success:false,
-    message:"Route not found"
-   })
-})
+app.use(notFound)
 
 export default app;
