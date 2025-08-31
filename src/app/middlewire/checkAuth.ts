@@ -18,6 +18,9 @@ export const checkAuth=(...authRoles: string[])=>async(req:Request,res:Response,
     if(!authRoles.includes(verifiedToken.role)){
         throw new AppError(httpStatus.FORBIDDEN,"You don't have access of this route")
     }
+
+    req.user = verifiedToken
+
     next()
 
     } catch (error) {

@@ -6,9 +6,12 @@ import { envVars } from "./app/config/env";
 import { globalErrorHandler } from "./app/middlewire/globalErrorHandler";
 import  httpStatus  from 'http-status-codes';
 import { notFound } from "./app/middlewire/notFound";
+import cookieParser from "cookie-parser";
 
 
 const app = express();
+
+app.use(cookieParser())
 
 app.use(express.json());
 

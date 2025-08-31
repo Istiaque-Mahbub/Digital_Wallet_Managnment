@@ -19,8 +19,8 @@ export const seedSuperAdmin = async ()=> {
         email:envVars.SUPER_ADMIN_EMAIL,
         password:hashedPassword,
         isVerified:true,
-        phone:"01210000000",
-        nidNumber:"1234567890123"
+        phone:"01210000070",
+        nidNumber:"1234567894123"
     }
     const superAdmin = await User.create(payload)
     console.log("Super Admin created")

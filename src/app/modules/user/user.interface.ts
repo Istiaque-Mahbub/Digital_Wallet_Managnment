@@ -15,6 +15,7 @@ export enum IS_ACTIVE{
 }
 
 export interface IUser{
+    _id?:Types.ObjectId
     name:string
     email:string
     nidNumber:string

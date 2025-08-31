@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response, Router } from "express";
 import { UserController } from "./users.controller";
 import { validateRequest } from "../../utils/validateRequest";
-import { createUserZodSchema } from "./user.validation";
+import { createUserZodSchema, updateUserZodSchema } from "./user.validation";
 import jwt, { JwtPayload } from "jsonwebtoken"
 import AppError from "../../errorHelpers/AppError";
 import httpStatus  from 'http-status-codes';
@@ -16,5 +16,6 @@ const router = Router()
 
 router.post('/register',validateRequest(createUserZodSchema),UserController.createUser)
 router.get('/all-users',checkAuth(ROLE.ADMIN,ROLE.SUPER_ADMIN),UserController.getAllUser)
+router.patch("/:id",checkAuth(...Object.values(ROLE)),validateRequest(updateUserZodSchema),UserController.updateUser)
 
 export const UserRoutes = router
