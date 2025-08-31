@@ -1,0 +1,29 @@
+import { model, Schema } from "mongoose";
+import { IS_ACTIVE, IUser, ROLE } from './user.interface';
+
+
+const userSchema = new Schema<IUser>({
+    name:{type:String,required:true},
+    email:{type:String,required:true,unique:true},
+    password:{type:String,required:true},
+    nidNumber:{type:String,required:true,unique:true},
+    phone:{type:String,required:true,unique:true},
+    role:{
+        type:String,
+        enum:Object.values(ROLE),
+        default:ROLE.USER
+    },
+    isActive:{
+        type:String,
+        enum:Object.values(IS_ACTIVE),
+        default:IS_ACTIVE.ACTIVE
+    },
+    isDeleted:{type:Boolean,default:false},
+    isVerified:{type:Boolean,default:true}
+},{
+    timestamps:true,
+    versionKey:false
+})
+
+
+export const User = model<IUser>("User",userSchema)
