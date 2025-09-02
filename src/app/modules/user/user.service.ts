@@ -5,13 +5,21 @@ import  httpStatus  from 'http-status-codes';
 import bcryptjs from 'bcryptjs'
 import { envVars } from "../../config/env";
 import { JwtPayload } from "jsonwebtoken";
+import { Wallet } from "../wallet/wallet.model";
 
 
 
 const createUser =async (payload:Partial<IUser>) =>{
+
+    
+
     const {email,password,...rest}= payload
 
- const    isUserExist =await User.findOne({email})
+    const session = await User.startSession()
+    session.startTransaction()
+
+ try {
+    const    isUserExist =await User.findOne({email})
  
  if(isUserExist){
        throw new AppError(httpStatus.CONFLICT,"User already exist ")
@@ -21,13 +29,34 @@ const createUser =async (payload:Partial<IUser>) =>{
 
 
 
-    const user = await User.create({
+    const user = await User.create([{
         email,
         password:hashedPassword,
         ...rest
-    })
+    }],{session})
 
-    return user
+    const wallet = await Wallet.create([{
+        userId:user[0]?._id,
+    }],{session})
+
+    const updatedUser = await User
+            .findByIdAndUpdate(
+                user[0]?._id,
+                { wallet: wallet[0]?._id },
+                { new: true, runValidators: true,session }
+            )
+            .populate("wallet")
+
+            await session.commitTransaction()
+            session.endSession()
+
+
+    return updatedUser
+ } catch (error) {
+    await session.abortTransaction()
+    session.endSession()
+    throw error
+ }
 }
 
 

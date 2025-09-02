@@ -52,5 +52,8 @@ export const newAccessTokenWithRefreshToken = async(refreshToken:string) =>{
        }
     
        const accessToken = generateToken(jwtPayload,envVars.JWT_ACCESS_SECRET,envVars.JWT_ACCESS_EXPIRES)
+
+       
+
        return accessToken
 }

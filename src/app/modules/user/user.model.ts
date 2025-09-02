@@ -19,7 +19,9 @@ const userSchema = new Schema<IUser>({
         default:IS_ACTIVE.ACTIVE
     },
     isDeleted:{type:Boolean,default:false},
-    isVerified:{type:Boolean,default:true}
+    isVerified:{type:Boolean,default:true},
+    wallet:{type:Schema.Types.ObjectId,ref:"Wallet"
+    }
 },{
     timestamps:true,
     versionKey:false
