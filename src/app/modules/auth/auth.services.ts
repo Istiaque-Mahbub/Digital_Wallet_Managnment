@@ -38,16 +38,35 @@ const credentialLogin = async(payload:Partial<IUser>)=>{
 
 const getNewAccessToken = async(refreshToken:string)=>{
     
-    const accessToken = newAccessTokenWithRefreshToken(refreshToken)
- 
+    const newAccessToken = await newAccessTokenWithRefreshToken(refreshToken)
+   
+    console.log(newAccessToken)
+
  
     return {
           
-          accessToken
+          accessToken:newAccessToken
           
     }
  }
 
+
+ const resetPassword = async(oldPassword:string,newPassword:string,decodeToken:JwtPayload)=>{
+
+    const user = await User.findById(decodeToken.userId)
+    
+    const isOldPasswordMatch = await bcryptjs.compare(oldPassword,user?.password as string)
+
+    if(!isOldPasswordMatch){
+        throw new AppError(httpStatus.UNAUTHORIZED,"Old password doesn't matched")
+    }
+
+    user!.password = await bcryptjs.hash(newPassword,Number(envVars.BCRYPT_SALT_ROUND))
+    user?.save()
+    
+    
+ }
+
 export const  AuthServices = {
-    credentialLogin,getNewAccessToken
+    credentialLogin,getNewAccessToken,resetPassword
 }
