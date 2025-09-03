@@ -1,5 +1,5 @@
 import AppError from "../../errorHelpers/AppError";
-import { IUser, ROLE } from "./user.interface";
+import { IS_ACTIVE, IUser, ROLE } from "./user.interface";
 import { User } from "./user.model";
 import  httpStatus  from 'http-status-codes';
 import bcryptjs from 'bcryptjs'
@@ -108,6 +108,33 @@ const getAllUsers = async()=>{
         meta:{
             total:totalUser
         }
+    }
+}
+
+const requestForAgent = async(userId:string)=>{
+    try {
+        const isUserExist = await User.findById(userId)
+
+        if(isUserExist?.role === ROLE.AGENT){
+            throw new AppError(httpStatus.CONFLICT,"You are already an agent")
+        }
+
+        if(isUserExist?.isActive === IS_ACTIVE.BLOCKED ){
+            throw new AppError(httpStatus.UNAUTHORIZED,"You are not active user")
+        }
+
+        if(isUserExist?.isActive === IS_ACTIVE.INACTIVE ){
+            throw new AppError(httpStatus.UNAUTHORIZED,"You are not active user")
+        }
+
+        if(isUserExist?.isDeleted){
+            throw new AppError(httpStatus.UNAUTHORIZED,"You are not allowed")
+        }
+
+        
+
+    } catch (error) {
+        
     }
 }
 

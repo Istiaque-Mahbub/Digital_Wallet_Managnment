@@ -35,7 +35,8 @@ export const createUserZodSchema = z.object({
     address: z
         .string()
         .max(200, { message: "Address cannot exceed 200 characters." })
-        .optional()
+        .optional(),
+    adminCommission:z.number().optional(),
 })
 export const updateUserZodSchema = z.object({
     name: z

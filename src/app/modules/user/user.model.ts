@@ -18,9 +18,11 @@ const userSchema = new Schema<IUser>({
         enum:Object.values(IS_ACTIVE),
         default:IS_ACTIVE.ACTIVE
     },
+    adminCommission:{type:Number,default:0},
     isDeleted:{type:Boolean,default:false},
     isVerified:{type:Boolean,default:true},
-    wallet:{type:Schema.Types.ObjectId,ref:"Wallet"
+    wallet:{type:Schema.Types.ObjectId,ref:"Wallet",
+    
     }
 },{
     timestamps:true,

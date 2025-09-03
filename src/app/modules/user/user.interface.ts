@@ -25,9 +25,9 @@ export interface IUser{
     address?:string
     isDeleted?:boolean
     isActive?:IS_ACTIVE
+    adminCommission?:number 
     isVerified?:boolean
     role?: ROLE
     wallet?: Types.ObjectId
-   
     
 }
