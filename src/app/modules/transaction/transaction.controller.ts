@@ -29,6 +29,23 @@ const sendMoney = async(req:Request,res:Response,next:NextFunction) =>{
     })
 }
 
+const cashIn = async(req:Request,res:Response,next:NextFunction)=>{
+
+    const decodedToken = req.user
+    const agentId = decodedToken.userId
+    const receiverId = req.body.receiverId
+    const amount = Number(req.body.amount)
+
+    const result = await TransactionServices.cashIn(agentId,receiverId,amount)
+
+    sendResponse(res,{
+        statusCode:httpStatus.OK,
+        success:true,
+        message:"Money send successfully",
+        data:result
+    })
+}
+
 export const TransactionController = {
-    sendMoney
+    sendMoney,cashIn
 }
