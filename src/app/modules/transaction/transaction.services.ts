@@ -8,7 +8,8 @@ import { TRANSACTION_STATUS } from "./transcation.interface";
 import { Transaction } from "./transaction.model";
 
 
-const agentCommission=2
+const agentCommissionCashIn=2
+const agentCommissionCashOut=3
 const superAdminCommission=5
 
 const sendMoney = async(senderId:string,receiverId:string,amount:number)=>{
@@ -112,7 +113,7 @@ const cashIn =async (agentId:string,receiverId:string,amount:number) =>{
     throw new AppError(httpStatus.BAD_REQUEST,"Inappropriate amount")
 }
 
-amount = amount + agentCommission
+amount = amount + agentCommissionCashIn
 
 const session = await mongoose.startSession();
 session.startTransaction();
@@ -152,10 +153,10 @@ try {
     throw new AppError(httpStatus.BAD_REQUEST, "Agent wallet does not have enough");
   }
 
-  receiverWallet.balance = receiverWallet.balance! + (amount - agentCommission);
+  receiverWallet.balance = receiverWallet.balance! + (amount - agentCommissionCashIn);
   await receiverWallet.save({ session });
   agentWallet.balance! -=amount;
-  agentWallet.agentCommission! += agentCommission 
+  agentWallet.agentCommission! += agentCommissionCashIn 
   agentWallet.agentMoney -= amount
   await agentWallet.save({ session });
 
@@ -177,7 +178,7 @@ try {
       {
         user: receiverId,
         wallet: receiverWallet?._id,
-        amount: amount-agentCommission,
+        amount: amount-agentCommissionCashIn,
         status: TRANSACTION_STATUS.COMPLETE,
       },
     ],
@@ -196,7 +197,93 @@ try {
 
 }
 
+const cashOut = async(agentId:string,receiverId:string,amount:number)=>{
+  if(amount<=0){
+    throw new AppError(httpStatus.BAD_REQUEST,"Inappropriate amount")
+}
+
+amount = amount + agentCommissionCashOut
+
+const session = await mongoose.startSession();
+session.startTransaction();
+
+try {
+
+  
+  const agent = await User.findById(agentId)
+  const receiver = await User.findById(receiverId)
+  
+
+  if(!agent){
+    throw new AppError(httpStatus.BAD_REQUEST,"Agent doesn't exists")
+  }
+  if(!receiver){
+    throw new AppError(httpStatus.BAD_REQUEST,"Receiver doesn't exists")
+  }
+
+  if(agent.role!==ROLE.AGENT){
+    throw new AppError(httpStatus.FORBIDDEN,"You are not and agent")
+  }
+
+  const agentWallet = await Wallet.findById(agent.wallet)
+  const receiverWallet = await Wallet.findById(receiver.wallet)
+
+  if (!receiverWallet) {
+    throw new AppError(httpStatus.BAD_REQUEST, "Receiver wallet does not exist");
+  }
+  if (!agentWallet) {
+    throw new AppError(httpStatus.BAD_REQUEST, "Agent wallet does not exist");
+  }
+
+  if(receiverWallet.balance!<amount){
+    throw new AppError(httpStatus.BAD_REQUEST, "Client wallet does not have enough money");
+  }
+
+  receiverWallet.balance! -=amount
+  await receiverWallet.save({session})
+
+  agentWallet.agentCommission! += agentCommissionCashOut
+  await agentWallet.save({session})
+
+
+  const agentTxn = await Transaction.create(
+    [
+      {
+        user: agentId,
+        wallet: agentWallet._id,
+        amount: agentCommissionCashOut,
+        status: TRANSACTION_STATUS.COMPLETE,
+      },
+    ],
+    { session }
+  );
+
+  const receiverTxn = await Transaction.create(
+    [
+      {
+        user: receiverId,
+        wallet: receiverWallet?._id,
+        amount: amount-agentCommissionCashOut,
+        status: TRANSACTION_STATUS.COMPLETE,
+      },
+    ],
+    { session })
+
+    await session.commitTransaction();
+    session.endSession();
+
+    return {agentTxn:agentTxn[0],receiverTxn:receiverTxn[0]}
+
+  
+} catch (error) {
+  await session.abortTransaction()
+  session.endSession()
+  throw error
+}
+
+}
+
 
 export const TransactionServices = {
-    sendMoney,cashIn
+    sendMoney,cashIn,cashOut
 } 

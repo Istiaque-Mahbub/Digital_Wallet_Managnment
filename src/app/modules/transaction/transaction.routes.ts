@@ -9,6 +9,7 @@ const router = Router()
 
 router.post("/send-money",checkAuth(...Object.values(ROLE)),TransactionController.sendMoney)
 router.post("/cash-in",checkAuth(ROLE.AGENT),TransactionController.cashIn)
+router.post("/cash-out",checkAuth(ROLE.AGENT),TransactionController.cashOut)
 
 
 export const TransactionRouters = router
