@@ -284,6 +284,43 @@ try {
 }
 
 
+const getIndividualTransactionHistory = async(userId:string)=>{
+    
+  try {
+    
+    const userTransaction = await Transaction.find({user:userId})
+    console.log(userTransaction)
+    const totalDocument = await Transaction.find({user:userId}).countDocuments()
+    
+    return{
+      data:userTransaction,
+      meta:{
+          total:totalDocument
+      }
+    }
+  } catch (error) {
+    console.log(error)
+  }
+
+
+
+
+}
+
+const getAllTransaction = async() =>{
+  const transaction = await Transaction.find({})
+
+  const totalTransaction = await Transaction.countDocuments()
+
+  return{
+      data:transaction,
+      meta:{
+          total:totalTransaction
+      }
+  }
+}
+
+
 export const TransactionServices = {
-    sendMoney,cashIn,cashOut
+    sendMoney,cashIn,cashOut,getAllTransaction,getIndividualTransactionHistory
 } 

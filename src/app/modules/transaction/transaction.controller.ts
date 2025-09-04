@@ -5,6 +5,7 @@ import { verifyToken } from "../../utils/jwt"
 import { TransactionServices } from "./transaction.services"
 import { sendResponse } from "../../utils/sendResponse"
 import  httpStatus  from 'http-status-codes';
+import { Transaction } from "./transaction.model"
 
 
 
@@ -64,6 +65,31 @@ const cashOut = async(req:Request,res:Response,next:NextFunction)=>{
     })
 }
 
+const getIndividualTransactionHistory = async(req:Request,res:Response,next:NextFunction)=>{
+    const userId = req.params.id
+    const result = await TransactionServices.getIndividualTransactionHistory(userId)
+    sendResponse(res,{
+        statusCode:httpStatus.OK,
+        success:true,
+        message:"Your transaction retrieved successfully",
+        data:result
+    })
+}
+
+const getAllTransaction = async(req:Request,res:Response,next:NextFunction)=>{
+
+    
+
+    const result = await TransactionServices.getAllTransaction()
+
+    sendResponse(res,{
+        statusCode:httpStatus.OK,
+        success:true,
+        message:"All transaction retrieved successfully",
+        data:result
+    })
+}
+
 export const TransactionController = {
-    sendMoney,cashIn,cashOut
+    sendMoney,cashIn,cashOut,getAllTransaction,getIndividualTransactionHistory
 }

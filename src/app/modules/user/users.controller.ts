@@ -51,6 +51,28 @@ const updateUser = catchAsync(async(req:Request,res:Response,next:NextFunction)=
 
 })
 
+const requestForAgent = catchAsync(async(req:Request,res:Response,next:NextFunction)=>{
+
+   
+    const token = req.headers.authorization
+    const verifiedToken = verifyToken(token as string,envVars.JWT_ACCESS_SECRET) as JwtPayload
+    const userId = verifiedToken.userId 
+
+
+    const user = await UserServices.requestForAgent(userId!)
+
+    
+     
+    sendResponse(res,{
+        statusCode:httpStatus.CREATED,
+        success:true,
+        message:"Request for agent successfully",
+        data:user
+    })
+ 
+
+})
+
 
 
 const getAllUser = catchAsync(async(req:Request,res:Response,next:NextFunction)=>{
@@ -69,5 +91,5 @@ const getAllUser = catchAsync(async(req:Request,res:Response,next:NextFunction)=
 }
 )
 export  const UserController = {
-    createUser,getAllUser,updateUser
+    createUser,getAllUser,updateUser,requestForAgent
 }
