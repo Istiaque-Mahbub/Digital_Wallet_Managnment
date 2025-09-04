@@ -1,12 +1,21 @@
 import AppError from "../../errorHelpers/AppError";
-import { IUser, ROLE } from "./user.interface";
+import { IS_ACTIVE, IUser, ROLE } from "./user.interface";
 import { User } from "./user.model";
 import  httpStatus  from 'http-status-codes';
 import bcryptjs from 'bcryptjs'
 import { envVars } from "../../config/env";
 import { JwtPayload } from "jsonwebtoken";
 import { Wallet } from "../wallet/wallet.model";
+import { Payment } from "../payment/payment.model";
+import { PAYMENT_STATUS } from "../payment/payment.interface";
+import mongoose from "mongoose";
+import { SSLService } from "../../sslCommerz/sslCommerz.service";
+import { ISslCommerz } from "../../sslCommerz/sslCommerz.interface";
 
+
+const getTransactionId = () =>{
+    return `tran_${Date.now()}_${Math.floor(Math.random()*1000)}`
+}
 
 
 const createUser =async (payload:Partial<IUser>) =>{
@@ -111,6 +120,82 @@ const getAllUsers = async()=>{
     }
 }
 
+
+
+const requestForAgent = async(userId:string)=>{
+    
+    const transactionId = getTransactionId()
+    const agentMoney = 10000
+
+    const session = await mongoose.startSession();
+session.startTransaction();
+    try {
+
+
+        const isUserExist = await User.findById(userId).session(session);
+
+       
+
+        if(isUserExist?.payment){
+            throw new AppError(httpStatus.CONFLICT,"You already requested for it once before")
+        }
+
+        if(isUserExist?.role === ROLE.AGENT){
+            throw new AppError(httpStatus.CONFLICT,"You are already an agent")
+        }
+
+        if(isUserExist?.isActive === IS_ACTIVE.BLOCKED ){
+            throw new AppError(httpStatus.UNAUTHORIZED,"You are not active user")
+        }
+
+        if(isUserExist?.isActive === IS_ACTIVE.INACTIVE ){
+            throw new AppError(httpStatus.UNAUTHORIZED,"You are not active user")
+        }
+
+        if(isUserExist?.isDeleted){
+            throw new AppError(httpStatus.UNAUTHORIZED,"You are not allowed")
+        }
+
+        const payment = await Payment.create([{
+            user:userId,
+            wallet:isUserExist?.wallet,
+            status:PAYMENT_STATUS.UNPAID,
+            transactionId:transactionId,
+            amount:agentMoney
+        }],{session})
+
+        const updatedUser = await User.findByIdAndUpdate(userId,{
+            payment:payment[0]._id
+        },{new:true,runValidators:true}).populate("payment") 
+        const userEmail = isUserExist?.email as string
+        const userPhone = isUserExist?.phone as string
+        const username = isUserExist?.name as string
+
+        const sslPayload:ISslCommerz = {
+          phoneNumber:userPhone,
+          email:userEmail,
+          amount:agentMoney,
+          name:username,
+          transactionId:transactionId
+        }
+
+        const sslPayment = await SSLService.sslPaymentInit(sslPayload)
+
+        await session.commitTransaction()
+        session.endSession()
+
+        return {
+            user:updatedUser,
+            paymentUrl:sslPayment.GatewayPageURL
+        }
+
+    } catch (error) {
+        await session.abortTransaction()
+        session.endSession()
+        throw error
+    }
+}
+
 export const UserServices = {
-    createUser,getAllUsers,updateUser
+    createUser,getAllUsers,updateUser,requestForAgent
 }

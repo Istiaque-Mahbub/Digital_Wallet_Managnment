@@ -25,9 +25,10 @@ export interface IUser{
     address?:string
     isDeleted?:boolean
     isActive?:IS_ACTIVE
+    adminCommission?:number
+    payment?:Types.ObjectId 
     isVerified?:boolean
     role?: ROLE
     wallet?: Types.ObjectId
-   
     
 }
