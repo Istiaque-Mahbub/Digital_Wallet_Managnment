@@ -7,6 +7,7 @@ import { User } from "../user/user.model";
 import { PAYMENT_STATUS } from "./payment.interface";
 import { Payment } from "./payment.model";
 import  httpStatus  from 'http-status-codes';
+import { Wallet } from "../wallet/wallet.model";
 
 const initPayment = async(userId:string)=>{
     
@@ -50,10 +51,21 @@ const successPayment = async (query: Record<string, string>) => {
             status: PAYMENT_STATUS.PAID,
         }, { runValidators: true, session: session })
 
+        const user = updatedPayment?.user
+
+        const wallet = await Wallet.findOne({userId:user})
+
         await User
             .findByIdAndUpdate(
                 updatedPayment?.user,
                 { role: ROLE.AGENT },
+                { runValidators: true, session }
+            )
+
+            await Wallet
+            .findByIdAndUpdate(
+                wallet,
+                { $inc: { agentMoney: updatedPayment?.amount } } ,
                 { runValidators: true, session }
             )
 

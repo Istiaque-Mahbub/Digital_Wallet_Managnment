@@ -73,6 +73,29 @@ const requestForAgent = catchAsync(async(req:Request,res:Response,next:NextFunct
 
 })
 
+const agentRequestAddMoney = catchAsync(async(req:Request,res:Response,next:NextFunction)=>{
+
+   
+    const token = req.headers.authorization
+    const verifiedToken = verifyToken(token as string,envVars.JWT_ACCESS_SECRET) as JwtPayload
+    const userId = verifiedToken.userId 
+    const amount = Number(req.body.amount)
+
+
+    const user = await UserServices.agentRequestAddMoney(userId!,amount)
+
+    
+     
+    sendResponse(res,{
+        statusCode:httpStatus.CREATED,
+        success:true,
+        message:"Request for agent successfully",
+        data:user
+    })
+ 
+
+})
+
 
 
 const getAllUser = catchAsync(async(req:Request,res:Response,next:NextFunction)=>{
@@ -91,5 +114,5 @@ const getAllUser = catchAsync(async(req:Request,res:Response,next:NextFunction)=
 }
 )
 export  const UserController = {
-    createUser,getAllUser,updateUser,requestForAgent
+    createUser,getAllUser,updateUser,requestForAgent,agentRequestAddMoney
 }

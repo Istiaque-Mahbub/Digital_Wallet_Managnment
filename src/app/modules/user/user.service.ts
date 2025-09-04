@@ -18,6 +18,7 @@ const getTransactionId = () =>{
 }
 
 
+
 const createUser =async (payload:Partial<IUser>) =>{
 
     
@@ -196,6 +197,101 @@ session.startTransaction();
     }
 }
 
+const agentRequestAddMoney = async (
+    userId: string,
+    amount: number
+  ) => {
+    const transactionId = getTransactionId();
+  
+    const session = await mongoose.startSession();
+    session.startTransaction();
+  
+    try {
+      const user = await User.findById(userId).session(session);
+  
+      if (!user) {
+        throw new AppError(httpStatus.NOT_FOUND, "User not found");
+      }
+  
+      if (user.role !== ROLE.AGENT) {
+        throw new AppError(httpStatus.UNAUTHORIZED, "Only agents can add money");
+      }
+  
+      if (
+        user.isActive === IS_ACTIVE.BLOCKED ||
+        user.isActive === IS_ACTIVE.INACTIVE ||
+        user.isDeleted
+      ) {
+        throw new AppError(httpStatus.UNAUTHORIZED, "You are not allowed");
+      }
+  
+      // Check if user already has a pending (unpaid) payment
+      const existingPending = await Payment.findOne({
+        user: userId,
+      }).session(session);
+  
+      if (existingPending?.status !== PAYMENT_STATUS.PAID) {
+        throw new AppError(
+          httpStatus.CONFLICT,
+          "You already have a pending payment request"
+        );
+      }
+  
+      if(existingPending.status === PAYMENT_STATUS.PAID){
+        await Payment.findByIdAndDelete(existingPending._id).session(session);
+      }
+
+      const payment = await Payment.create(
+        [
+          {
+            user: userId,
+            wallet: user.wallet,
+            status: PAYMENT_STATUS.UNPAID,
+            transactionId,
+            amount,
+          },
+        ],
+        { session }
+      );
+  
+      // Link latest payment to user
+      const updatedUser = await User.findByIdAndUpdate(
+        userId,
+        { payment: payment[0]._id },
+        { new: true, runValidators: true, session }
+      ).populate("payment");
+
+    //   const updatedWallet = await Wallet.findByIdAndUpdate(
+    //     payment[0].wallet,
+    //     { $inc: { agentMoney: payment[0].amount } },
+    //     { new: true, runValidators: true, session }
+    //   ).populate("payment");
+  
+      // Prepare SSL request
+      const sslPayload: ISslCommerz = {
+        phoneNumber: user.phone as string,
+        email: user.email as string,
+        amount,
+        name: user.name as string,
+        transactionId,
+      };
+  
+      const sslPayment = await SSLService.sslPaymentInit(sslPayload);
+  
+      await session.commitTransaction();
+      session.endSession();
+  
+      return {
+        user: updatedUser,
+        paymentUrl: sslPayment.GatewayPageURL,
+      };
+    } catch (error) {
+      await session.abortTransaction();
+      session.endSession();
+      throw error;
+    }
+  };
+
 export const UserServices = {
-    createUser,getAllUsers,updateUser,requestForAgent
+    createUser,getAllUsers,updateUser,requestForAgent,agentRequestAddMoney
 }
