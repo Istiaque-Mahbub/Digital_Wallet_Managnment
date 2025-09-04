@@ -147,7 +147,7 @@ src
 
 ## 📚 API Endpoints
 
-* `/api/v1/auth` → Authentication routes (login, register)
+* `/api/v1/auth` → Authentication routes (login, reset password)
 * `/api/v1/user` → User-related actions
 * `create automatically when user created` → Wallet management
 * `/api/v1/payment` → Payment processing (SSLCommerz)
