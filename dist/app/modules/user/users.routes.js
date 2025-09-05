@@ -1,0 +1,16 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.UserRoutes = void 0;
+const express_1 = require("express");
+const users_controller_1 = require("./users.controller");
+const validateRequest_1 = require("../../utils/validateRequest");
+const user_validation_1 = require("./user.validation");
+const user_interface_1 = require("./user.interface");
+const checkAuth_1 = require("../../middlewire/checkAuth");
+const router = (0, express_1.Router)();
+router.post('/register', (0, validateRequest_1.validateRequest)(user_validation_1.createUserZodSchema), users_controller_1.UserController.createUser);
+router.get('/all-users', (0, checkAuth_1.checkAuth)(user_interface_1.ROLE.ADMIN, user_interface_1.ROLE.SUPER_ADMIN), users_controller_1.UserController.getAllUser);
+router.post('/agent-request', (0, checkAuth_1.checkAuth)(user_interface_1.ROLE.USER), users_controller_1.UserController.requestForAgent);
+router.post('/agent-request-add-money', (0, checkAuth_1.checkAuth)(user_interface_1.ROLE.AGENT), users_controller_1.UserController.agentRequestAddMoney);
+router.patch("/:id", (0, checkAuth_1.checkAuth)(...Object.values(user_interface_1.ROLE)), (0, validateRequest_1.validateRequest)(user_validation_1.updateUserZodSchema), users_controller_1.UserController.updateUser);
+exports.UserRoutes = router;

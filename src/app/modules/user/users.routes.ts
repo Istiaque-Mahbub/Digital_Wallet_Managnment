@@ -1,4 +1,4 @@
-import { NextFunction, Request, Response, Router } from "express";
+import {  Router } from "express";
 import { UserController } from "./users.controller";
 import { validateRequest } from "../../utils/validateRequest";
 import { createUserZodSchema, updateUserZodSchema } from "./user.validation";

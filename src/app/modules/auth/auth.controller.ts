@@ -4,6 +4,7 @@ import { sendResponse } from "../../utils/sendResponse"
 import  httpStatus  from 'http-status-codes';
 import { AuthServices } from "./auth.services";
 import AppError from "../../errorHelpers/AppError";
+import { envVars } from "../../config/env";
 
 
 const credentialLogin = catchAsync(async(req:Request,res:Response,next:NextFunction)=>{
@@ -12,9 +13,11 @@ const credentialLogin = catchAsync(async(req:Request,res:Response,next:NextFunct
 
     const logInfo = await AuthServices.credentialLogin(req?.body)
 
-    res.cookie("accessToken",logInfo.accessToken,{httpOnly:true,secure:false})
+    res.cookie("accessToken",logInfo.accessToken,{httpOnly:true,secure: envVars.Node_ENV === "production",
+        sameSite:"none" })
     
-    res.cookie("refreshToken",logInfo.refreshToken,{httpOnly:true,secure:false})
+    res.cookie("refreshToken",logInfo.refreshToken,{httpOnly:true,secure: envVars.Node_ENV === "production",
+        sameSite:"none" })
      
     sendResponse(res,{
         statusCode:httpStatus.CREATED,
@@ -36,7 +39,10 @@ const getNewAccessToken = catchAsync(async(req:Request,res:Response,next:NextFun
 
     const tokenInfo = await AuthServices.getNewAccessToken(refreshToken)
     
-    res.cookie("accessToken",tokenInfo.accessToken,{httpOnly:true,secure:false})
+    res.cookie("accessToken",tokenInfo.accessToken,{httpOnly:true,
+        secure: envVars.Node_ENV === "production",
+        sameSite:"none" 
+    })
      
     sendResponse(res,{
         statusCode:httpStatus.CREATED,

@@ -1,7 +1,7 @@
 
 
 import { Request, Response, NextFunction } from 'express';
-import { AnyZodObject, ZodObject } from 'zod';
+import { AnyZodObject } from 'zod';
 
 
 export const validateRequest =

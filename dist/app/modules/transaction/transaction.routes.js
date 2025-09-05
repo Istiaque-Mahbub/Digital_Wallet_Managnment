@@ -1,0 +1,14 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.TransactionRouters = void 0;
+const express_1 = require("express");
+const checkAuth_1 = require("../../middlewire/checkAuth");
+const user_interface_1 = require("../user/user.interface");
+const transaction_controller_1 = require("./transaction.controller");
+const router = (0, express_1.Router)();
+router.post("/send-money", (0, checkAuth_1.checkAuth)(...Object.values(user_interface_1.ROLE)), transaction_controller_1.TransactionController.sendMoney);
+router.post("/cash-in", (0, checkAuth_1.checkAuth)(user_interface_1.ROLE.AGENT), transaction_controller_1.TransactionController.cashIn);
+router.post("/cash-out", (0, checkAuth_1.checkAuth)(user_interface_1.ROLE.AGENT), transaction_controller_1.TransactionController.cashOut);
+router.get("/all-transaction", (0, checkAuth_1.checkAuth)(user_interface_1.ROLE.ADMIN, user_interface_1.ROLE.SUPER_ADMIN), transaction_controller_1.TransactionController.getAllTransaction);
+router.get("/individual-transaction/:id", (0, checkAuth_1.checkAuth)(...Object.values(user_interface_1.ROLE)), transaction_controller_1.TransactionController.getIndividualTransactionHistory);
+exports.TransactionRouters = router;

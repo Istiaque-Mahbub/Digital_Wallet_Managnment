@@ -1,5 +1,4 @@
 import { NextFunction, Request, Response } from "express";
-import { User } from "./user.model";
 import httpStatus from 'http-status-codes'
 import { UserServices } from "./user.service";
 import { catchAsync } from "../../utils/catchAsync";
