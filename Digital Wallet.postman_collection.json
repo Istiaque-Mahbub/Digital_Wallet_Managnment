@@ -1,0 +1,541 @@
+{
+	"info": {
+		"_postman_id": "f2ffd7a4-2558-4578-8a76-682e65589336",
+		"name": "Digital Wallet",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "45501852",
+		"_collection_link": "https://istiaquemahbub.postman.co/workspace/Istiaque-Mahbub's-Workspace~0e08d3b5-05a9-4b23-849f-a7fa1828fb5e/collection/45501852-f2ffd7a4-2558-4578-8a76-682e65589336?action=share&source=collection_link&creator=45501852"
+	},
+	"item": [
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "Register User",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiI2ODc5MWY0ZGE1ODZlMTQ5YmUwYzliZTciLCJlbWFpbCI6InN1cGVyQGdtYWlsLmNvbSIsInJvbGUiOiJVU0VSX0FETUlOIiwiaWF0IjoxNzU0NjU3MzIzLCJleHAiOjE3NTQ3NDM3MjN9.DKEA1124_qnt99burx5bJgLM-o6SFAbxiKoM0ekDd5g",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": " {\r\n  \"name\": \"John Doe\",\r\n  \"email\": \"johnd1oe1a@example.com\",\r\n  \"nidNumber\": \"1234456d78900123\",\r\n  \"password\": \"12345\",\r\n  \"phone\": \"+123445a967890\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/v1/user/register",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"v1",
+								"user",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Request for agent",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiI2ODc5MWY0ZGE1ODZlMTQ5YmUwYzliZTciLCJlbWFpbCI6InN1cGVyQGdtYWlsLmNvbSIsInJvbGUiOiJVU0VSX0FETUlOIiwiaWF0IjoxNzU0NjU3MzIzLCJleHAiOjE3NTQ3NDM3MjN9.DKEA1124_qnt99burx5bJgLM-o6SFAbxiKoM0ekDd5g",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": " {\r\n  \"name\": \"John Doe\",\r\n  \"email\": \"johnd1oe1a@example.com\",\r\n  \"nidNumber\": \"1234456d78900123\",\r\n  \"password\": \"12345\",\r\n  \"phone\": \"+123445a967890\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/v1/user/register",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"v1",
+								"user",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Agent add money",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiI2ODc5MWY0ZGE1ODZlMTQ5YmUwYzliZTciLCJlbWFpbCI6InN1cGVyQGdtYWlsLmNvbSIsInJvbGUiOiJVU0VSX0FETUlOIiwiaWF0IjoxNzU0NjU3MzIzLCJleHAiOjE3NTQ3NDM3MjN9.DKEA1124_qnt99burx5bJgLM-o6SFAbxiKoM0ekDd5g",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": " {\r\n  \"name\": \"John Doe\",\r\n  \"email\": \"johnd1oe1a@example.com\",\r\n  \"nidNumber\": \"1234456d78900123\",\r\n  \"password\": \"12345\",\r\n  \"phone\": \"+123445a967890\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/v1/user/register",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"v1",
+								"user",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update User",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiI2ODc5MWY0ZGE1ODZlMTQ5YmUwYzliZTciLCJlbWFpbCI6InN1cGVyQGdtYWlsLmNvbSIsInJvbGUiOiJVU0VSX0FETUlOIiwiaWF0IjoxNzU0NjU3MzIzLCJleHAiOjE3NTQ3NDM3MjN9.DKEA1124_qnt99burx5bJgLM-o6SFAbxiKoM0ekDd5g",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": " {\r\n  \"name\": \"John Doe\",\r\n  \"email\": \"johnd1oe1a@example.com\",\r\n  \"nidNumber\": \"1234456d78900123\",\r\n  \"password\": \"12345\",\r\n  \"phone\": \"+123445a967890\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/v1/user/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"v1",
+								"user",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Users",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiI2ODc5MWY0ZGE1ODZlMTQ5YmUwYzliZTciLCJlbWFpbCI6InN1cGVyQGdtYWlsLmNvbSIsInJvbGUiOiJVU0VSX0FETUlOIiwiaWF0IjoxNzU0NjU3MzIzLCJleHAiOjE3NTQ3NDM3MjN9.DKEA1124_qnt99burx5bJgLM-o6SFAbxiKoM0ekDd5g",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": " {\r\n  \"name\": \"John Doe\",\r\n  \"email\": \"johnd1oe1@example.com\",\r\n  \"nidNumber\": \"123445678900123\",\r\n  \"password\": \"12345\",\r\n  \"phone\": \"+123445967890\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/v1/user/all-users",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"v1",
+								"user",
+								"all-users"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiI2ODc5MWY0ZGE1ODZlMTQ5YmUwYzliZTciLCJlbWFpbCI6InN1cGVyQGdtYWlsLmNvbSIsInJvbGUiOiJVU0VSX0FETUlOIiwiaWF0IjoxNzU0NjU3MzIzLCJleHAiOjE3NTQ3NDM3MjN9.DKEA1124_qnt99burx5bJgLM-o6SFAbxiKoM0ekDd5g",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "//  {\r\n//   \"email\": \"johnd1fosse1a@example.com\",\r\n//   \"password\": \"12346789Q@\"\r\n// }\r\n\r\n{\r\n    \"email\": \"istiaquemahbub1@gmail.com\",\r\n   \"password\": \"123456789\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/v1/auth/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "logout",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiI2ODc5MWY0ZGE1ODZlMTQ5YmUwYzliZTciLCJlbWFpbCI6InN1cGVyQGdtYWlsLmNvbSIsInJvbGUiOiJVU0VSX0FETUlOIiwiaWF0IjoxNzU0NjU3MzIzLCJleHAiOjE3NTQ3NDM3MjN9.DKEA1124_qnt99burx5bJgLM-o6SFAbxiKoM0ekDd5g",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "//  {\r\n//   \"email\": \"johnd1fosse1a@example.com\",\r\n//   \"password\": \"12346789Q@\"\r\n// }\r\n\r\n{\r\n    \"email\": \"istiaquemahbub1@gmail.com\",\r\n   \"password\": \"123456789\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/v1/auth/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "reset password",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiI2ODc5MWY0ZGE1ODZlMTQ5YmUwYzliZTciLCJlbWFpbCI6InN1cGVyQGdtYWlsLmNvbSIsInJvbGUiOiJVU0VSX0FETUlOIiwiaWF0IjoxNzU0NjU3MzIzLCJleHAiOjE3NTQ3NDM3MjN9.DKEA1124_qnt99burx5bJgLM-o6SFAbxiKoM0ekDd5g",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "//  {\r\n//   \"email\": \"johnd1fosse1a@example.com\",\r\n//   \"password\": \"12346789Q@\"\r\n// }\r\n\r\n{\r\n    \"email\": \"istiaquemahbub1@gmail.com\",\r\n   \"password\": \"123456789\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/v1/auth/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Refresh token",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiI2ODc5MWY0ZGE1ODZlMTQ5YmUwYzliZTciLCJlbWFpbCI6InN1cGVyQGdtYWlsLmNvbSIsInJvbGUiOiJVU0VSX0FETUlOIiwiaWF0IjoxNzU0NjU3MzIzLCJleHAiOjE3NTQ3NDM3MjN9.DKEA1124_qnt99burx5bJgLM-o6SFAbxiKoM0ekDd5g",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "//  {\r\n//   \"email\": \"johnd1fosse1a@example.com\",\r\n//   \"password\": \"12346789Q@\"\r\n// }\r\n\r\n{\r\n    \"email\": \"istiaquemahbub1@gmail.com\",\r\n   \"password\": \"123456789\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/v1/auth/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Transaction",
+			"item": [
+				{
+					"name": "Send money",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OGI3MGZlZTUwNDllMmM4YzBlMDY1MjIiLCJlbWFpbCI6ImpvaG5oYXVAZXhhbXBsZS5jb20iLCJyb2xlIjoiVVNFUiIsImlhdCI6MTc1NjgyODM4MywiZXhwIjoxNzU2OTE0NzgzfQ.fEv6S8xapxLfLFPRUYnEsBCN2ZO4HmtN-86HYhdjvxc",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": " {\r\n  \r\n  \"receiverId\": \"68b70fd85049e2c8c0e0651b\",\r\n  \"amount\": 5\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/v1/transaction/send-money",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"v1",
+								"transaction",
+								"send-money"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cash In",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OGI3MGZlZTUwNDllMmM4YzBlMDY1MjIiLCJlbWFpbCI6ImpvaG5oYXVAZXhhbXBsZS5jb20iLCJyb2xlIjoiVVNFUiIsImlhdCI6MTc1NjgyODM4MywiZXhwIjoxNzU2OTE0NzgzfQ.fEv6S8xapxLfLFPRUYnEsBCN2ZO4HmtN-86HYhdjvxc",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": " {\r\n  \r\n  \"receiverId\": \"68b70fd85049e2c8c0e0651b\",\r\n  \"amount\": 5\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/v1/transaction/send-money",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"v1",
+								"transaction",
+								"send-money"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cash Out",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OGI3YWY3ZTE1ZmY5NWZiNjU5MTRiODgiLCJlbWFpbCI6ImpvaG5kb2VAZXhhbXBsZS5jb20iLCJyb2xlIjoiQUdFTlQiLCJpYXQiOjE3NTY4Njg3NjIsImV4cCI6MTc1Njk1NTE2Mn0.jpNh68ZLagWQmCthwLmAqpiQu8yaIvHpXjbIpvLDuP8",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": " {\r\n  \"receiverId\": \"68b78c289c7a5c24895f380b\",\r\n  \"amount\": 5\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/v1/transaction/cash-out",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"v1",
+								"transaction",
+								"cash-out"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Transaction",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OGI3OGJmYTljN2E1YzI0ODk1ZjM3ZmUiLCJlbWFpbCI6ImlzdGlhcXVlbWFoYnViMUBnbWFpbC5jb20iLCJyb2xlIjoiU1VQRVJfQURNSU4iLCJpYXQiOjE3NTY4NzcyNjQsImV4cCI6MTc1Njk2MzY2NH0.tyOhTZ7hrqN2FFOOkeCGxwGzPsfYkGUy6diZ5JWKlbs",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:5000/api/v1/transaction/all-transaction",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"v1",
+								"transaction",
+								"all-transaction"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Individual Transaction history",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OGI3YWY3ZTE1ZmY5NWZiNjU5MTRiODgiLCJlbWFpbCI6ImpvaG5kb2VAZXhhbXBsZS5jb20iLCJyb2xlIjoiQUdFTlQiLCJpYXQiOjE3NTY4Njg3NjIsImV4cCI6MTc1Njk1NTE2Mn0.jpNh68ZLagWQmCthwLmAqpiQu8yaIvHpXjbIpvLDuP8",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": " {\r\n  \"receiverId\": \"68b78c289c7a5c24895f380b\",\r\n  \"amount\": 5\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/v1/transaction/cash-out",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"v1",
+								"transaction",
+								"cash-out"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Payment",
+			"item": [
+				{
+					"name": "Again Payment request",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
