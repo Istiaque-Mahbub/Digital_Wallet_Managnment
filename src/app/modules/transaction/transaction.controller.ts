@@ -11,7 +11,7 @@ import { Transaction } from "./transaction.model"
 
 const sendMoney = async(req:Request,res:Response,next:NextFunction) =>{
 
-    const token = req.headers.authorization
+    const token = req.headers.authorization || req.cookies.accessToken
     const receiverId = req?.body?.receiverId 
     const amount = Number(req?.body?.amount)
     const verifiedToken = verifyToken(token as string,envVars.JWT_ACCESS_SECRET) as JwtPayload 
@@ -51,8 +51,8 @@ const cashIn = async(req:Request,res:Response,next:NextFunction)=>{
 const cashOut = async(req:Request,res:Response,next:NextFunction)=>{
 
     const decodedToken = req.user
-    const agentId = decodedToken.userId
-    const receiverId = req.body.receiverId
+    const receiverId = decodedToken.userId
+    const agentId = req.body.receiverId
     const amount = Number(req.body.amount)
 
     const result = await TransactionServices.cashOut(agentId,receiverId,amount)

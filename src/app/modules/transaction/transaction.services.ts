@@ -135,10 +135,12 @@ try {
     throw new AppError(httpStatus.FORBIDDEN,"You are not and agent")
   }
 
-  const agentWallet = await Wallet.findById(agent.wallet)
-  const receiverWallet = await Wallet.findById(receiver.wallet)
+  const agentWallet = await Wallet.findById(agent?.wallet)
+  const receiverWallet = await Wallet.findById(receiver?.wallet)
 
+ 
   if (!receiverWallet) {
+    console.log(receiverWallet)
     throw new AppError(httpStatus.BAD_REQUEST, "Receiver wallet does not exist");
   }
   if (!agentWallet) {
@@ -221,9 +223,9 @@ try {
     throw new AppError(httpStatus.BAD_REQUEST,"Receiver doesn't exists")
   }
 
-  if(agent.role!==ROLE.AGENT){
-    throw new AppError(httpStatus.FORBIDDEN,"You are not and agent")
-  }
+  // if(receiver.role!==ROLE.AGENT){
+  //   throw new AppError(httpStatus.FORBIDDEN,"You must enter an agent number")
+  // }
 
   const agentWallet = await Wallet.findById(agent.wallet)
   const receiverWallet = await Wallet.findById(receiver.wallet)

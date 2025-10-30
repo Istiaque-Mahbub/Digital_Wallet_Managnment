@@ -13,10 +13,10 @@ const credentialLogin = catchAsync(async(req:Request,res:Response,next:NextFunct
 
     const logInfo = await AuthServices.credentialLogin(req?.body)
 
-    res.cookie("accessToken",logInfo.accessToken,{httpOnly:true,secure: envVars.Node_ENV === "production",
+    res.cookie("accessToken",logInfo.accessToken,{httpOnly:true,secure: true,
         sameSite:"none" })
     
-    res.cookie("refreshToken",logInfo.refreshToken,{httpOnly:true,secure: envVars.Node_ENV === "production",
+    res.cookie("refreshToken",logInfo.refreshToken,{httpOnly:true,secure: true,
         sameSite:"none" })
      
     sendResponse(res,{
@@ -40,7 +40,7 @@ const getNewAccessToken = catchAsync(async(req:Request,res:Response,next:NextFun
     const tokenInfo = await AuthServices.getNewAccessToken(refreshToken)
     
     res.cookie("accessToken",tokenInfo.accessToken,{httpOnly:true,
-        secure: envVars.Node_ENV === "production",
+        secure:true,
         sameSite:"none" 
     })
      

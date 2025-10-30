@@ -108,6 +108,16 @@ const updateUser = async(userId:string,payload:Partial<IUser>,decodedToken:JwtPa
 
 }
 
+const findUserByPhone = async (phone: string) => {
+  const user = await User.findOne({ phone }).select("_id phone email");
+
+  if (!user) {
+    throw new AppError(httpStatus.NOT_FOUND, "User not found with this phone number");
+  }
+
+  return user;
+};
+
 const getAllUsers = async()=>{
     const users = await User.find({})
 
@@ -292,6 +302,13 @@ const agentRequestAddMoney = async (
     }
   };
 
+  const getMe = async (userId: string) => {
+    const user = await User.findById(userId).select("-password").populate("wallet");
+    return {
+        data: user
+    }
+};
+
 export const UserServices = {
-    createUser,getAllUsers,updateUser,requestForAgent,agentRequestAddMoney
+    createUser,getAllUsers,updateUser,requestForAgent,agentRequestAddMoney,getMe,findUserByPhone
 }
